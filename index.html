@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>CleverProgrammer</title>
+    <style>
+        /* ChatBot Interface CSS */
+body {
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    text-align: center;
+    padding: 20px;
+    background-color:  #ccfff2;
+}
+
+h1 {
+    color: #333;
+}
+
+/* Add background color to the chatbot interface */
+#chatbot-container {
+    background-color: #f2f2f2; /* Replace with your desired background color */
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+#chatbox {
+    width: 80%;
+    max-width: 500px;
+    margin: 0 auto;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 15px;
+    background-color: #fff;
+}
+
+#chatbox div {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+#chatbox div.user {
+    justify-content: flex-end;
+}
+
+#chatbox div span {
+    max-width: 80%;
+    padding: 10px 15px;
+    border-radius: 15px;
+    word-wrap: break-word;
+}
+
+#chatbox div.user span {
+    background-color: #4CAF50;
+    color: #fff;
+}
+
+#chatbox div.bot span {
+    background-color: #f2f2f2;
+    color: #333;
+}
+
+input[type="text"] {
+    width: 80%;
+    max-width: 500px;
+    margin-top: 10px;
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 15px;
+    outline: none;
+}
+
+input[type="text"]:focus {
+    border-color: #4CAF50;
+    box-shadow: 0 0 4px #4CAF50;
+}
+
+
+    </style>
+</head>
+<body>
+    <h1>Olivia</h1>
+    <div id="chatbox"></div>
+    <input type="text" id="userInput" placeholder="Type your message...">
+
+    <script>
+        // Dictionary of predefined user inputs and corresponding bot responses
+        const responses = {
+	    "hi": ["Hi! how can I help you"],
+            "hello": ["Hello!", "Hi there!", "Hey!"],
+	    "what are you doing":["Iam Chating with you","Iam helping to you"],
+            "how are you": ["I'm good, thank you!", "I'm doing well, how about you?", "All good!"],
+	    "what is your name": ["I am a CleverProgrammer!", "I go by the name Olivia.", "You can call me Olivia.", "My name is Olivia, nice to meet you!"],
+    	    "how old are you": ["I am just a program, so I don't have an age.", "I don't age, as I'm a virtual assistant.", "I'm ageless!", "I don't have an age, but I'm constantly learning!"],
+            "what can you do": ["I can help you with various tasks like answering questions, providing information, and having conversations.", "I'm designed to chat with you and provide useful responses.", "Ask me anything, and I'll do my best to assist you!", "I can engage in conversations and provide information on a wide range of topics!"],
+    	    "bye": ["Goodbye!", "See you later!", "Take care!", "Farewell!"],
+            "tell me a joke": ["Sure, here's one: Why don't scientists trust atoms? Because they make up everything!", "Knock, knock. Who's there? Lettuce. Lettuce who? Lettuce in, it's cold out here!", "Why did the scarecrow win an award? Because he was outstanding in his field!", "Want to hear a construction joke? Sorry, I'm still working on it!"],
+            "who is your creator": ["I was created by Firoz", "I was designed and developed by a Firoz.", "I owe my existence to the hard work of the talented Firoz"],
+            "thank you": ["You're welcome!", "No problem! If you have any more questions, feel free to ask.", "Anytime! Don't hesitate to ask if you need further assistance."],
+            "tell me a fun fact": ["Sure, here's a fun fact: Honey never spoils. Sealed honey jars found in ancient Egyptian tombs are still perfectly safe to eat!", "Here's a fun fact for you: The Eiffel Tower can grow up to 6 inches taller during hot summer days due to thermal expansion!", "Did you know? A group of flamingos is called a 'flamboyance'.", "Fun fact: Bananas are berries, while strawberries are not actual berries!"],
+   	    "what is the formula for the area of a circle": ["The formula for the area of a circle is A = π * r^2, where 'A' represents the area and 'r' is the radius of the circle.", "To find the area of a circle, use the formula A = π * r^2, where 'A' is the area and 'r' is the radius of the circle.", "The area of a circle can be calculated using the formula A = π * r^2, where 'A' represents the area and 'r' is the radius of the circle.", "To determine the area of a circle, use the formula A = π * r^2, where 'A' denotes the area and 'r' is the radius of the circle."],
+	    "default": ["I'm sorry, I didn't understand that.", "Could you please repeat that?", "I'm still learning!"],
+};
+
+        function getBotResponse(userInput) {
+            userInput = userInput.trim().toLowerCase();
+            for (let key in responses) {
+                if (userInput === key) {
+                    return randomChoice(responses[key]);
+                }
+            }
+            return randomChoice(responses["default"]);
+        }
+
+        // Helper function to select a random element from an array
+        function randomChoice(arr) {
+            return arr[Math.floor(Math.random() * arr.length)];
+        }
+
+        document.getElementById("userInput").addEventListener("keyup", function(event) {
+            if (event.keyCode === 13) {
+                const userMessage = event.target.value.trim();
+                if (userMessage !== "") {
+                    const chatbox = document.getElementById("chatbox");
+                    const userDiv = document.createElement("div");
+                    userDiv.innerText = "You: " + userMessage;
+                    chatbox.appendChild(userDiv);
+
+                    const botResponse = getBotResponse(userMessage);
+                    const botDiv = document.createElement("div");
+                    botDiv.innerText = "ChatBot: " + botResponse;
+                    chatbox.appendChild(botDiv);
+
+                    // Clear the input field after sending the user message
+                    event.target.value = "";
+
+                    // Scroll to the bottom of the chatbox to see the latest messages
+                    chatbox.scrollTop = chatbox.scrollHeight;
+                }
+            }
+        });
+    </script>
+</body>
+</html>
